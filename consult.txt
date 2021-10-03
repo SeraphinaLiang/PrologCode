@@ -1,0 +1,720 @@
+GNU Prolog 1.4.5 (64 bits)
+Compiled Jul 14 2018, 13:19:42 with x86_64-w64-mingw32-gcc
+By Daniel Diaz
+Copyright (C) 1999-2018 Daniel Diaz
+| ?- consult('C:/GNU-Prolog/code/test1/hello.pl').
+compiling C:/GNU-Prolog/code/test1/hello.pl for byte code...
+C:/GNU-Prolog/code/test1/hello.pl compiled, 0 lines read - 75 bytes written, 9 ms
+
+yes
+| ?- loves(juliet,romeo)
+.
+uncaught exception: error(existence_error(procedure,loves/2),top_level/0)
+| ?- loves(juliet,romeo).
+uncaught exception: error(existence_error(procedure,loves/2),top_level/0)
+| ?- consult('C:/GNU-Prolog/code/test1/hello.pl').
+compiling C:/GNU-Prolog/code/test1/hello.pl for byte code...
+C:/GNU-Prolog/code/test1/hello.pl compiled, 3 lines read - 450 bytes written, 11 ms
+
+yes
+| ?- loves(juliet,romeo).
+
+yes
+| ?- loves(romeo,X).
+
+X = juliet
+
+yes
+| ?- [hello].
+compiling C:/GNU-Prolog/code/test1/hello.pl for byte code...
+C:/GNU-Prolog/code/test1/hello.pl compiled, 15 lines read - 1177 bytes written, 5 ms
+
+yes
+| ?- female(alice).
+
+yes
+| ?- listing(male).
+
+% file: C:/GNU-Prolog/code/test1/hello.pl
+
+male(albert).
+male(bob).
+male(bill).
+male(carl).
+male(charlie).
+male(dan).
+male(edward).
+
+yes
+| ?- male(X),female(Y).
+
+X = albert
+Y = alice ? ;
+
+X = albert
+Y = betsy ? ;
+
+X = albert
+Y = diana ? ;
+
+X = bob
+Y = alice ? ;
+
+X = bob
+Y = betsy ? ;
+
+X = bob
+Y = diana ? ;
+
+X = bill
+Y = alice ? ;
+
+X = bill
+Y = betsy ? ;
+
+X = bill
+Y = diana ? ;
+
+X = carl
+Y = alice ? ;
+
+X = carl
+Y = betsy ? ;
+
+X = carl
+Y = diana ? ;
+
+X = charlie
+Y = alice ? ;
+
+X = charlie
+Y = betsy ? ;
+
+X = charlie
+Y = diana ? ;
+
+X = dan
+Y = alice ? ;
+
+X = dan
+Y = betsy ? ;
+
+X = dan
+Y = diana ? ;
+
+X = edward
+Y = alice ? ;
+
+X = edward
+Y = betsy ? ;
+
+X = edward
+Y = diana
+
+(156 ms) yes
+| ?- runs(albert).
+uncaught exception: error(existence_error(procedure,runs/1),top_level/0)
+| ?- [hello].
+compiling C:/GNU-Prolog/code/test1/hello.pl for byte code...
+C:/GNU-Prolog/code/test1/hello.pl compiled, 24 lines read - 1776 bytes written, 7 ms
+
+(15 ms) yes
+| ?- runs(albert).
+uncaught exception: error(existence_error(procedure,runs/1),top_level/0)
+| ?- run(albert).
+
+no
+| ?- [hello].
+compiling C:/GNU-Prolog/code/test1/hello.pl for byte code...
+C:/GNU-Prolog/code/test1/hello.pl compiled, 24 lines read - 1776 bytes written, 6 ms
+
+yes
+| ?- [hello].
+compiling C:/GNU-Prolog/code/test1/hello.pl for byte code...
+C:/GNU-Prolog/code/test1/hello.pl compiled, 24 lines read - 1780 bytes written, 6 ms
+
+yes
+| ?- runs(albert).
+
+no
+| ?- [hello].
+compiling C:/GNU-Prolog/code/test1/hello.pl for byte code...
+C:/GNU-Prolog/code/test1/hello.pl compiled, 24 lines read - 1784 bytes written, 6 ms
+
+(16 ms) yes
+| ?- runs(albert).
+
+yes
+| ?- [hello].
+compiling C:/GNU-Prolog/code/test1/hello.pl for byte code...
+C:/GNU-Prolog/code/test1/hello.pl compiled, 28 lines read - 2064 bytes written, 5 ms
+
+(16 ms) yes
+| ?- dances(alice)
+.
+
+yes
+| ?- [hello].
+compiling C:/GNU-Prolog/code/test1/hello.pl for byte code...
+C:/GNU-Prolog/code/test1/hello.pl compiled, 32 lines read - 2384 bytes written, 5 ms
+
+yes
+| ?- does_alice_dance.
+when she is happy and with albert
+
+yes
+| ?- [hello].
+compiling C:/GNU-Prolog/code/test1/hello.pl for byte code...
+C:/GNU-Prolog/code/test1/hello.pl compiled, 36 lines read - 2648 bytes written, 7 ms
+
+yes
+| ?- swims(bob).
+uncaught exception: error(existence_error(procedure,near_water/1),swims/0)
+| ?- [hello].
+compiling C:/GNU-Prolog/code/test1/hello.pl for byte code...
+C:/GNU-Prolog/code/test1/hello.pl compiled, 40 lines read - 2670 bytes written, 7 ms
+
+yes
+| ?- swims(bill).
+
+true ? 
+
+yes
+| ?- [hello].
+compiling C:/GNU-Prolog/code/test1/hello.pl for byte code...
+C:/GNU-Prolog/code/test1/hello.pl compiled, 51 lines read - 3453 bytes written, 7 ms
+
+(31 ms) yes
+| ?- parent(X,bob).
+
+X = albert ? 
+
+(15 ms) yes
+| ?- 
+
+parent(X,bob).
+
+X = albert ? ;
+
+X = alice ? ;
+
+no
+| ?- parent(X,bob),dances(X).
+
+X = alice ? ;
+
+no
+| ?- parent(Y,carl),parent(X,Y).
+
+X = albert
+Y = bob ? ;
+
+X = alice
+Y = bob ? ;
+
+no
+| ?- parent(albert,X),parent(X,Y).
+
+X = bob
+Y = carl ? ;
+
+X = bob
+Y = charlie ? ;
+
+no
+| ?- [hello].
+compiling C:/GNU-Prolog/code/test1/hello.pl for byte code...
+C:/GNU-Prolog/code/test1/hello.pl compiled, 58 lines read - 3947 bytes written, 11 ms
+
+yes
+| ?- get_grandchild.
+albert grandchild is carl
+
+true ? ;
+albert grandchild is charlie
+
+true ? ;
+
+(31 ms) no
+| ?- parent(X,carl),parent(X,charlie).
+
+X = bob ? ;
+
+(31 ms) no
+| ?- [hello].
+compiling C:/GNU-Prolog/code/test1/hello.pl for byte code...
+C:/GNU-Prolog/code/test1/hello.pl compiled, 62 lines read - 4786 bytes written, 10 ms
+
+yes
+| ?- get_grandparent.
+bob is the grandparent 
+
+true ? ;
+
+(16 ms) no
+| ?- [hello].
+compiling C:/GNU-Prolog/code/test1/hello.pl for byte code...
+C:/GNU-Prolog/code/test1/hello.pl compiled, 64 lines read - 4933 bytes written, 8 ms
+
+yes
+| ?- parent(X,carl),brother(X,Y).
+
+X = bob
+Y = bill ? ;
+
+no
+| ?- [hello].
+compiling C:/GNU-Prolog/code/test1/hello.pl for byte code...
+C:/GNU-Prolog/code/test1/hello.pl compiled, 69 lines read - 5270 bytes written, 7 ms
+
+yes
+| ?- grand_parent(carl,A).
+
+A = albert ? ;
+
+A = alice ? ;
+
+no
+| ?- [hello].
+compiling C:/GNU-Prolog/code/test1/hello.pl for byte code...
+C:/GNU-Prolog/code/test1/hello.pl compiled, 71 lines read - 5509 bytes written, 8 ms
+
+yes
+| ?- country(usa).
+
+yes
+| ?- city(usa).
+
+yes
+| ?- 
+| ?- what_grade(5).
+go to kindergarten
+
+true ? ;
+go to grade 0
+
+yes
+| ?- what_grade(10).
+go to grade 5
+
+yes
+| ?- [hello].
+compiling C:/GNU-Prolog/code/test1/hello.pl for byte code...
+C:/GNU-Prolog/code/test1/hello.pl compiled, 87 lines read - 6568 bytes written, 9 ms
+
+yes
+| ?- owns(albert,pet(cat,X)).
+
+X = olive
+
+yes
+| ?- [hello].
+compiling C:/GNU-Prolog/code/test1/hello.pl for byte code...
+C:/GNU-Prolog/code/test1/hello.pl compiled, 90 lines read - 6865 bytes written, 8 ms
+
+yes
+| ?- customer(sally,_,Balance).
+
+Balance = 40
+
+yes
+| ?- [hello].
+compiling C:/GNU-Prolog/code/test1/hello.pl for byte code...
+C:/GNU-Prolog/code/test1/hello.pl compiled, 95 lines read - 7509 bytes written, 12 ms
+
+(15 ms) yes
+| ?- get_customer_balance(sally,smith).
+sally smith owes us $40.00 
+
+yes
+| ?- [hello].
+compiling C:/GNU-Prolog/code/test1/hello.pl for byte code...
+C:/GNU-Prolog/code/test1/hello.pl:93: warning: singleton variables [Y,Y2] for vertical/1
+C:/GNU-Prolog/code/test1/hello.pl:94: warning: singleton variables [X,X2] for horizontal/1
+C:/GNU-Prolog/code/test1/hello.pl compiled, 98 lines read - 8179 bytes written, 8 ms
+
+yes
+| ?- vertical(line(point(3,5),point(3,10))).
+
+yes
+| ?- vertical(line(point(3,5),point(X,10))).
+
+X = 3
+
+yes
+| ?- vertical(line(point(3,5),X)).
+
+X = point(3,_)
+
+yes
+
+(15 ms) yes
+| ?- trace.
+The debugger will first creep -- showing everything (trace)
+
+yes
+{trace}
+| ?- mammal(human).
+      1    1  Call: mammal(human) ? 
+      2    2  Call: warm_blooded(human) ? 
+      2    2  Exit: warm_blooded(human) ? 
+      3    2  Call: produce_milk(human) ? 
+      3    2  Exit: produce_milk(human) ? 
+      4    2  Call: have_hair(human) ? 
+      4    2  Exit: have_hair(human) ? 
+      1    1  Exit: mammal(human) ? 
+
+(32 ms) yes
+{trace}
+| ?- mammal(penguin).
+      1    1  Call: mammal(penguin) ? 
+      2    2  Call: warm_blooded(penguin) ? 
+      2    2  Exit: warm_blooded(penguin) ? 
+      3    2  Call: produce_milk(penguin) ? 
+      3    2  Exit: produce_milk(penguin) ? 
+      4    2  Call: have_hair(penguin) ? 
+      4    2  Fail: have_hair(penguin) ? 
+      1    1  Fail: mammal(penguin) ? 
+
+no
+{trace}
+| ?- notrace.
+The debugger is switched off
+
+yes
+| ?- [hello].
+compiling C:/GNU-Prolog/code/test1/hello.pl for byte code...
+C:/GNU-Prolog/code/test1/hello.pl:100: warning: singleton variables [Y,Y2] for vertical/1
+C:/GNU-Prolog/code/test1/hello.pl:101: warning: singleton variables [X,X2] for horizontal/1
+C:/GNU-Prolog/code/test1/hello.pl compiled, 124 lines read - 9594 bytes written, 9 ms
+
+(16 ms) yes
+| ?- related(albert,carl).
+
+true ? 
+
+yes
+
+
+yes
+| ?- X is 8*7.
+
+X = 56
+
+yes
+| ?- [db].
+uncaught exception: error(existence_error(source_sink,'db.pl'),consult/1)
+| ?- [bd].
+compiling C:/GNU-Prolog/code/test1/bd.pl for byte code...
+C:/GNU-Prolog/code/test1/bd.pl:100: warning: singleton variables [Y,Y2] for vertical/1
+C:/GNU-Prolog/code/test1/bd.pl:101: warning: singleton variables [X,X2] for horizontal/1
+C:/GNU-Prolog/code/test1/bd.pl compiled, 127 lines read - 9851 bytes written, 15 ms
+
+yes
+| ?- double_digit(1000,Y).
+
+Y = 2000
+
+yes
+| ?- random(0,10,X).
+
+X = 0
+
+yes
+| ?- between(0,10,X).
+
+X = 0 ? '
+Action (; for next solution, a for all solutions, RET to stop) ? ;
+
+X = 1 ? ;
+
+X = 2 ? ;
+
+X = 3 ? ;
+
+X = 4 ? ;
+
+X = 5 ? ;
+
+X = 6 ? ;
+
+X = 7 ? ;
+
+X = 8 ? ;
+
+X = 9 ? ;
+
+X = 10
+
+(63 ms) yes
+| ?- succ(2,X).
+
+X = 3
+
+yes
+| ?- X is abs(-8).
+
+X = 8
+
+yes
+| ?- X is max(10,5).
+
+X = 10
+
+yes
+| ?- X is min(10,5).
+
+X = 5
+
+yes
+| ?- X is round(10.68).
+
+X = 11
+
+yes
+| ?- X is truncate(10.89).
+
+X = 10
+
+(31 ms) yes
+| ?- X is 2**3.
+
+X = 8.0
+
+yes
+| ?- [bd].
+compiling C:/GNU-Prolog/code/test1/bd.pl for byte code...
+C:/GNU-Prolog/code/test1/bd.pl:100: warning: singleton variables [Y,Y2] for vertical/1
+C:/GNU-Prolog/code/test1/bd.pl:101: warning: singleton variables [X,X2] for horizontal/1
+C:/GNU-Prolog/code/test1/bd.pl compiled, 130 lines read - 10280 bytes written, 16 ms
+
+yes
+| ?- is_even(12).
+
+yes
+| ?- is_even(19).
+
+no
+| ?- [bd].
+compiling C:/GNU-Prolog/code/test1/bd.pl for byte code...
+C:/GNU-Prolog/code/test1/bd.pl:100: warning: singleton variables [Y,Y2] for vertical/1
+C:/GNU-Prolog/code/test1/bd.pl:101: warning: singleton variables [X,X2] for horizontal/1
+C:/GNU-Prolog/code/test1/bd.pl compiled, 136 lines read - 10675 bytes written, 0 ms
+
+yes
+| ?- say_hi
+.
+what is your name ?Mary.
+Hi _43
+
+(47 ms) yes
+| ?- say_hi.
+what is your name ?'Mary'
+.
+Hi Mary
+
+(15 ms) yes
+| ?- 
+
+
+
+fav_char.
+uncaught exception: error(existence_error(procedure,fav_char/0),top_level/0)
+| ?- [bd].
+compiling C:/GNU-Prolog/code/test1/bd.pl for byte code...
+C:/GNU-Prolog/code/test1/bd.pl:100: warning: singleton variables [Y,Y2] for vertical/1
+C:/GNU-Prolog/code/test1/bd.pl:101: warning: singleton variables [X,X2] for horizontal/1
+C:/GNU-Prolog/code/test1/bd.pl compiled, 142 lines read - 11180 bytes written, 15 ms
+
+yes
+| ?- fav_char.
+fav char ?A
+the ascii value 65 is A
+
+(16 ms) yes
+| ?- [bd].
+compiling C:/GNU-Prolog/code/test1/bd.pl for byte code...
+C:/GNU-Prolog/code/test1/bd.pl:100: warning: singleton variables [Y,Y2] for vertical/1
+C:/GNU-Prolog/code/test1/bd.pl:101: warning: singleton variables [X,X2] for horizontal/1
+C:/GNU-Prolog/code/test1/bd.pl compiled, 160 lines read - 12577 bytes written, 15 ms
+
+(16 ms) yes
+| ?- write_to_file('words.txt','some words').
+
+
+yes
+| ?- read_file(words.txt').
+uncaught exception: error(syntax_error('user_input:10 (char:61) , or ) expected'),read_term/3)
+| ?- read_file('words.txt').
+some words
+
+(16 ms) yes
+| ?- [bd].
+compiling C:/GNU-Prolog/code/test1/bd.pl for byte code...
+C:/GNU-Prolog/code/test1/bd.pl:100: warning: singleton variables [Y,Y2] for vertical/1
+C:/GNU-Prolog/code/test1/bd.pl:101: warning: singleton variables [X,X2] for horizontal/1
+C:/GNU-Prolog/code/test1/bd.pl compiled, 168 lines read - 13205 bytes written, 15 ms
+
+(15 ms) yes
+| ?- count_to_10(3).
+3
+4
+5
+6
+7
+8
+9
+10
+
+true ? 
+
+(31 ms) yes
+| ?- [bd].
+compiling C:/GNU-Prolog/code/test1/bd.pl for byte code...
+C:/GNU-Prolog/code/test1/bd.pl:100: warning: singleton variables [Y,Y2] for vertical/1
+C:/GNU-Prolog/code/test1/bd.pl:101: warning: singleton variables [X,X2] for horizontal/1
+C:/GNU-Prolog/code/test1/bd.pl compiled, 173 lines read - 13683 bytes written, 15 ms
+
+yes
+| ?- count_down(2,7).
+5
+
+true ? 
+
+yes
+| ?- 
+
+count_down(2,8).
+6
+
+true ? ;
+5
+
+true ? ;
+4
+
+true ? ;
+3
+
+true ? ;
+2
+
+true ? ;
+1
+
+true ? ;
+0
+
+yes
+| ?- [bd].
+compiling C:/GNU-Prolog/code/test1/bd.pl for byte code...
+C:/GNU-Prolog/code/test1/bd.pl:100: warning: singleton variables [Y,Y2] for vertical/1
+C:/GNU-Prolog/code/test1/bd.pl:101: warning: singleton variables [X,X2] for horizontal/1
+C:/GNU-Prolog/code/test1/bd.pl compiled, 185 lines read - 14495 bytes written, 15 ms
+
+yes
+| ?- guess_num.
+guess number 14
+.
+14 is not the number
+guess number 13.
+13 is not the number
+guess number 15.
+15 is not the number
+right!
+
+true ? 
+
+(32 ms) yes
+| ?- assert(friend(a,b)).
+uncaught exception: error(existence_error(procedure,assert/1),top_level/0)
+| ?- [bd].
+compiling C:/GNU-Prolog/code/test1/bd.pl for byte code...
+C:/GNU-Prolog/code/test1/bd.pl:100: warning: singleton variables [Y,Y2] for vertical/1
+C:/GNU-Prolog/code/test1/bd.pl:101: warning: singleton variables [X,X2] for horizontal/1
+C:/GNU-Prolog/code/test1/bd.pl compiled, 185 lines read - 14495 bytes written, 15 ms
+
+(15 ms) yes
+| ?- assert(friend(aaa,bbb)).
+uncaught exception: error(existence_error(procedure,assert/1),top_level/0)
+| ?- assert(happy(a)).
+uncaught exception: error(existence_error(procedure,assert/1),top_level/0)
+| ?- write([albert|[alice,bob]]),nl.
+[albert,alice,bob]
+
+yes
+| ?- length([1,3,4],Y).
+
+Y = 3
+
+yes
+| ?- [_,X,_,_,_|T] = [a,v,d,s,v].
+
+T = []
+X = v
+
+yes
+| ?- [bd].
+compiling C:/GNU-Prolog/code/test1/bd.pl for byte code...
+C:/GNU-Prolog/code/test1/bd.pl:100: warning: singleton variables [Y,Y2] for vertical/1
+C:/GNU-Prolog/code/test1/bd.pl:101: warning: singleton variables [X,X2] for horizontal/1
+C:/GNU-Prolog/code/test1/bd.pl compiled, 191 lines read - 14922 bytes written, 15 ms
+
+yes
+| ?- write_list([1,3,4,5]).
+
+no
+| ?- [bd].
+compiling C:/GNU-Prolog/code/test1/bd.pl for byte code...
+C:/GNU-Prolog/code/test1/bd.pl:100: warning: singleton variables [Y,Y2] for vertical/1
+C:/GNU-Prolog/code/test1/bd.pl:101: warning: singleton variables [X,X2] for horizontal/1
+C:/GNU-Prolog/code/test1/bd.pl compiled, 191 lines read - 14883 bytes written, 0 ms
+
+yes
+| ?- write_list([1,3,4,5]).
+1
+3
+4
+5
+
+(15 ms) yes
+| ?- name('a stringssss',X).
+
+X = [97,32,115,116,114,105,110,103,115,115,115,115]
+
+yes
+| ?- name(X,[97,32,115,116,114,105,110,103,115,115,115,115]).
+
+X = 'a stringssss'
+
+yes
+| ?- [bd].
+compiling C:/GNU-Prolog/code/test1/bd.pl for byte code...
+C:/GNU-Prolog/code/test1/bd.pl:100: warning: singleton variables [Y,Y2] for vertical/1
+C:/GNU-Prolog/code/test1/bd.pl:101: warning: singleton variables [X,X2] for horizontal/1
+C:/GNU-Prolog/code/test1/bd.pl:187-191: warning: singleton variables [Strlist3,StrList3] for join_str/3
+C:/GNU-Prolog/code/test1/bd.pl compiled, 198 lines read - 15385 bytes written, 15 ms
+
+(16 ms) yes
+| ?- join_str('string1','string2',X).
+uncaught exception: error(instantiation_error,name/2)
+| ?- join_str('string1','string2',A).
+uncaught exception: error(instantiation_error,name/2)
+| ?- [bd].
+compiling C:/GNU-Prolog/code/test1/bd.pl for byte code...
+C:/GNU-Prolog/code/test1/bd.pl:100: warning: singleton variables [Y,Y2] for vertical/1
+C:/GNU-Prolog/code/test1/bd.pl:101: warning: singleton variables [X,X2] for horizontal/1
+C:/GNU-Prolog/code/test1/bd.pl compiled, 198 lines read - 15407 bytes written, 15 ms
+
+yes
+| ?- join_str('string1','string2',A).
+
+A = string1string2
+
+yes
+| ?- atom_length('hello',S).
+
+S = 5
+
+(16 ms) yes
+| ?- 
