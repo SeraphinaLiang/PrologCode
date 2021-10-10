@@ -1,4 +1,4 @@
-s(zero).
+% s(zero). 多余
 peano_plus(zero,X,X).
 peano_plus(s(X),Y,s(Z)) :- peano_plus(X,Y,Z).
 
