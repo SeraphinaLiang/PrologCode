@@ -8,7 +8,7 @@ link(c,d).
 link(d,c).
 
 /*neighbor*/
-neighbor(X,Y):-link(X,Y);link(Y,X).
+neighbor(X,Y):-link(X,Y),link(Y,X).
 
 /*path which will never end in circles*/
 path(X,Y):-link(X,Y);link(X,T),path(T,Y).
