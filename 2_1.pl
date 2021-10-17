@@ -11,7 +11,7 @@ link(d,c).
 neighbor(X,Y):-link(X,Y),link(Y,X).
 
 /*path which will never end in circles*/
-path(X,Y):-link(X,Y);link(X,T),path(T,Y).
+path(X,Y):-link(X,Y);link(X,T),path(T,Y),X\==Y.
 
 /*path which avoid circles*/
 path2(X,Y):-path2Helper(X,Y,[X]).
