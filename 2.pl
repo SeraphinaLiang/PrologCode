@@ -27,10 +27,11 @@ fib2(1,0).
 fib2(2,1).
 fib2(N,F):- 
     N > 2, 
-    fib2(N,0,1,F,3).
-fib2(N,Value1,Value2,Value,N):-
-    Value is Value1 + Value2.
-fib2(N,Value1,Value2,Value,Count):-
-    Temp is Value2 + Value1,
-    Cnt1 is Count + 1, 
-    fib2(N,Value2,Temp, Value, Cnt1).
+    fib2(N,F,0,1,3).
+fib2(N,F,F1,F2,N):-
+    F is F1 + F2.
+fib2(N,F,F1,F2,M):-
+    Temp is F1 + F2,
+    Count is M + 1, 
+    fib2(N,F,F2,Temp,Count).
+
