@@ -48,8 +48,8 @@ eval(fal,fal).
 eval(and(E1,E2),tru) :-  eval(E1,tru),eval(E2,tru).
 eval(and(E1,E2),fal) :-  eval(E1,fal) ; eval(E2,fal).
 
-eval(or(E1,_),tru) :- eval(E1,tru).
-eval(or(E1,E2),V) :- eval(E1,fal), eval(E2,V).
+eval(or(E1,E2),tru) :- eval(E1,tru);eval(E2,tru).
+eval(or(E1,E2),fal) :- eval(E1,fal),eval(E2,fal).
 
 eval(not(E1),fal) :- eval(E1,tru).
 eval(not(E1),tru) :- eval(E1,fal).
