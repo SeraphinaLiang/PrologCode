@@ -143,7 +143,33 @@ eratosthenes(PartialResult,[Candidate|Candidates],Limit,Result) :-
         eratosthenes([Candidate|PartialResult],NCandidates,Limit,Result)
     ).
 
+-----------------my work------------------
 
+all_primes(UpperBound,AllPrimes) :-
+    numlist(2,UpperBound,Candidates),
+    list_prime(Candidates,AllPrimes).
+
+list_prime([],[]).
+
+list_prime([C|Candidates],[C|AllPrimes]):-
+    is_prime(C,2),
+    list_prime(Candidates,AllPrimes).
+
+list_prime([C|Candidates],AllPrimes):-
+    \+(is_prime(C,2)),
+    list_prime(Candidates,AllPrimes).
+    
+
+is_prime(2,_).
+is_prime(3,_).
+is_prime(X,Low):-
+    Low < X,
+    M is X mod Low,
+    M =\= 0,
+    is_prime(X,Low+1).
+is_prime(X,Low):-
+    Low =:= X.
+    
 % ----------------------- infinite turing tape -----------------------
 
 
