@@ -149,7 +149,7 @@ all_primes(UpperBound,AllPrimes) :-
     numlist(2,UpperBound,Candidates),
     list_prime(Candidates,AllPrimes).
 
-list_prime([],[]).
+list_prime([],[]).  % initial, 终止条件 & 参数初始化
 
 list_prime([C|Candidates],[C|AllPrimes]):-
     is_prime(C,2),
