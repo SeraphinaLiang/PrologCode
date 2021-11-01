@@ -84,3 +84,37 @@ eval(=(E1,E2), fal):-
 
 % ----------------------- expressive -----------------------
 
+eval(int(I),_,I).
+
+eval(var(A),[pair(A,N)|_],N).
+eval(var(A),[_|L],Value):-
+    eval(var(A),L,Value).
+
+% ---method 2 for var(x)---
+%eval(var(A),[pair(X,N)|L],Value):-
+%    A=X,Value=N;
+%    eval(var(A),L,Value).
+
+eval(plus(E1,E2),List,Value):-
+    eval(E1,List,Value1),
+    eval(E2,List,Value2),
+    Value is Value1 + Value2.
+
+eval(times(E1,E2),List,Value):-
+    eval(E1,List,Value1),
+    eval(E2,List,Value2),
+    Value is Value1 * Value2.
+
+eval(min(E),List,Value):-
+    eval(E,List,Value1),
+    Value is -Value1.
+
+eval(pow(E1,E2),List,Value):-
+    eval(E1,List,Value1),
+    eval(E2,List,Value2),
+    Value is Value1 ** Value2.
+    
+    
+% ----------------------- prime numbers -----------------------
+
+
