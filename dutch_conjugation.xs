@@ -8,7 +8,7 @@ wij	zijn
 jullie	zijn
 zij	zijn
 
-	Hebben (have)
+Hebben (have)
 ik	heb
 jij	hebt
 hij	heeft
@@ -16,7 +16,7 @@ wij	hebben
 jullie	hebben
 zij	hebben
 
-	Komen (come)
+Komen (come)
 ik	kom
 jij	komt
 hij	komt
@@ -32,7 +32,7 @@ wij	gaan
 jullie	gaan
 zij	gaan
 
-	Lopen (walk)
+Lopen (walk)
 ik	loop
 jij	loopt
 hij	loopt
@@ -40,7 +40,7 @@ wij	lopen
 jullie	lopen
 zij	lopen
 
-	Lezen (read)
+Lezen (read)
 ik	lees
 jij	leest
 hij	leest
@@ -56,7 +56,7 @@ wij	eten
 jullie	eten
 zij	eten
 
-	Zien (see)
+Zien (see)
 ik	zie
 jij	ziet
 hij	ziet
@@ -64,7 +64,7 @@ wij	zien
 jullie	zien
 zij	zien
 
-	Doen (do)
+Doen (do)
 ik	doe
 jij	doet
 hij	doet
@@ -80,7 +80,7 @@ wij	kunnen
 jullie	kunnen
 zij	kunnen
 
-	Spreken (speak)
+Spreken (speak)
 ik	spreek
 jij	spreekt
 hij	spreekt
@@ -88,7 +88,7 @@ wij	spreken
 jullie	spreken
 zij	spreken
 
-	Heten (to name)
+Heten (to name)
 ik	heet
 jij	heet
 hij	heet
@@ -104,7 +104,7 @@ wij	studeren
 jullie	studeren
 zij	studeren
 
-	Werken (work)
+Werken (work)
 ik	werk
 jij	werkt
 hij	werkt
@@ -112,7 +112,7 @@ wij	werken
 jullie	werken
 zij	werken
 
-	Wonen (live)
+Wonen (live)
 ik	woon
 jij	woont
 hij	woont
@@ -128,7 +128,7 @@ wij	liggen
 jullie	liggen
 zij	liggen
 
-	Kennen (know)
+Kennen (know)
 ik	ken
 jij	kent
 hij	kent
@@ -136,7 +136,7 @@ wij	kennen
 jullie	kennen
 zij	kennen
 
-	Helpen (help)
+Helpen (help)
 ik	help
 jij	helpt
 hij	helpt
@@ -152,7 +152,7 @@ wij	bezoeken
 jullie	bezoeken
 zij	bezoeken
 
-	Moeten (must/should)
+Moeten (must/should)
 ik	moet
 jij	moet
 hij	moet
@@ -160,7 +160,7 @@ wij	moeten
 jullie	moeten
 zij	moeten
 
-	Begrijpen (understand)
+Begrijpen (understand)
 ik	begrijp
 jij	begrijpt
 hij	begrijpt
@@ -176,7 +176,7 @@ wij	geven
 jullie	geven
 zij	geven
 
-	Zullen (shall/will)
+Zullen (shall/will)
 ik	zal
 jij	zult
 hij	zal
@@ -184,7 +184,7 @@ wij	zullen
 jullie	zullen
 zij	zullen
 
-	Luisteren (listen)
+Luisteren (listen)
 ik	luister
 jij	luistert
 hij	luistert
@@ -200,7 +200,7 @@ wij	weten
 jullie	weten
 zij	weten
 
-	Mogen (may)
+Mogen (may)
 ik	mag
 jij	mag
 hij	mag
@@ -208,7 +208,7 @@ wij	mogen
 jullie	mogen
 zij	mogen
 
-	Ontmoeten (meet)
+Ontmoeten (meet)
 ik	ontmoet
 jij	ontmoet
 hij	ontmoet
