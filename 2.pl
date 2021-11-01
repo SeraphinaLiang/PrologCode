@@ -115,6 +115,35 @@ eval(pow(E1,E2),List,Value):-
     Value is Value1 ** Value2.
     
     
-% ----------------------- prime numbers -----------------------
+% ----------------------- prime numbers (give up, too hard)-----------------------
+
+all_primes(UpperBound,AllPrimes) :-
+    numlist(2,UpperBound,Candidates),
+    Limit is sqrt(UpperBound),
+    eratosthenes([],Candidates,Limit,AllPrimes).
+
+remove_multiples([],_,[]).
+remove_multiples([X|Xs],Candidate,Result) :-
+  0 is X mod Candidate,
+  remove_multiples(Xs,Candidate,Result).
+remove_multiples([X|Xs],Candidate,[X|Result]):-
+  \+ (0 is X mod Candidate),
+  remove_multiples(Xs,Candidate,Result).
+
+eratosthenes(PartialResult,[],_,Result) :-
+    reverse(PartialResult,Result).
+eratosthenes(PartialResult,[Candidate|Candidates],Limit,Result) :-
+    (
+        Candidate >= Limit
+    ->
+        reverse(PartialResult,RPResult),
+        append(RPResult,[Candidate|Candidates],Result)
+    ;
+        remove_multiples(Candidates,Candidate,NCandidates),
+        eratosthenes([Candidate|PartialResult],NCandidates,Limit,Result)
+    ).
+
+
+% ----------------------- infinite turing tape -----------------------
 
 
