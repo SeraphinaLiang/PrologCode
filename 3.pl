@@ -39,5 +39,28 @@ add_to(t(L,V,R),Elem,t(NewTreeLeft,V,R)):-
     balanced(t(NewTreeLeft,V,R)).
     
 % use new representation t(L,V,R,Depth)
+% New tree representation: store in each t both a value and the depth.
+% t(LeftSubtree,Value,RightSubtree,Depth)
 
+% The implementation of depth2/2 in constant time.
+depth2(nil,0).
+depth2(t(_,_,_,D),D).
+
+add_to2(nil,E,t(nil,E,nil,1)).
+add_to2(t(L,W,R,_),E,t(L,W,NR,ND)) :-
+   depth2(L,LD),
+   depth2(R,RD),
+   LD > RD,
+   add_to2(R,E,NR),
+   depth2(NR,NRD),
+   ND is max(NRD,LD) + 1.
+add_to2(t(L,W,R,_),E,t(NL,W,R,ND)) :-
+   depth2(L,LD),
+   depth2(R,RD),
+   LD =< RD,
+   add_to2(L,E,NL),
+   depth2(NL,NLD),
+   ND is max(NLD,RD) + 1.
+
+-------------alpha-beta pruning-----------
 
