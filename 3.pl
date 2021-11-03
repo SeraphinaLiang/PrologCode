@@ -1,3 +1,4 @@
+--------------balanced trees---------------
 balanced(nil).
 balanced(t(nil,_,nil)).
 balanced(t(LTree,_,RTree)):-
@@ -11,7 +12,7 @@ balanced(t(LTree,_,RTree)):-
 one(S):-
     S =:= 1;
     S =:= -1;
-    S =:=0.
+    S =:= 0.
 
 depth(t(nil,_,nil),1).
 depth(nil,0).
@@ -23,4 +24,5 @@ depth(t(L,_,R),Depth):-
 
 max(A,B,A):- A>B.
 max(_,B,B).
+
 
