@@ -25,4 +25,13 @@ depth(t(L,_,R),Depth):-
 max(A,B,A):- A>B.
 max(_,B,B).
 
+add_to(nil,Elem,t(nil,Elem,nil)).
+
+add_to(t(L,V,R),Elem,t(L,V,NewTreeRight)):-
+    add_to(R,Elem,NewTreeRight),
+    balanced(t(L,V,NewTreeRight)).
+    
+add_to(t(L,V,R),Elem,t(NewTreeLeft,V,R)):-
+    add_to(L,Elem,NewTreeLeft),
+    balanced(t(NewTreeLeft,V,R)).
 
