@@ -9,6 +9,7 @@ balanced(t(LTree,_,RTree)):-
     balanced(LTree),
     balanced(RTree).
 
+%  abs(DL - DR) <= 1 ?
 one(S):-
     S =:= 1;
     S =:= -1;
@@ -25,6 +26,8 @@ depth(t(L,_,R),Depth):-
 max(A,B,A):- A>B.
 max(_,B,B).
 
+% randomly add Elem to the Tree, and then check whether the Tree is balanced.
+
 add_to(nil,Elem,t(nil,Elem,nil)).
 
 add_to(t(L,V,R),Elem,t(L,V,NewTreeRight)):-
@@ -34,4 +37,7 @@ add_to(t(L,V,R),Elem,t(L,V,NewTreeRight)):-
 add_to(t(L,V,R),Elem,t(NewTreeLeft,V,R)):-
     add_to(L,Elem,NewTreeLeft),
     balanced(t(NewTreeLeft,V,R)).
+    
+% use new representation t(L,V,R,Depth)
+
 
