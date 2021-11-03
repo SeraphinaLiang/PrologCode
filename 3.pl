@@ -89,3 +89,12 @@ alpha_beta(min(L,R),Alpha,Beta,S,min(NewL,NewR)) :-
 	 S is min(ScoreL,ScoreR)
     ).
      
+     % test
+alpha_beta(max(
+               min(
+                   max(leaf(1,who),leaf(3,know)),
+                   max(leaf(5,prolog),leaf(1,was))),
+               min(
+                   max(leaf(2,such),leaf(2,fun)),
+                   max(leaf(5,!),leaf(4,!)))),
+           -10,10,S,T).
