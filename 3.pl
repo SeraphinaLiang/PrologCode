@@ -63,7 +63,9 @@ add_to2(t(L,W,R,_),E,t(NL,W,R,ND)) :-
    ND is max(NLD,RD) + 1.
 
 -------------alpha-beta pruning-----------
+
 alpha_beta(leaf(S,V),_,_,S,leaf(S,V)).
+
 alpha_beta(max(L,R),Alpha,Beta,S,max(NewL,NewR)) :-
     alpha_beta(L,Alpha,Beta,ScoreL,NewL),
     NewAlpha is max(ScoreL,Alpha),
@@ -76,6 +78,7 @@ alpha_beta(max(L,R),Alpha,Beta,S,max(NewL,NewR)) :-
      alpha_beta(R,NewAlpha,Beta,ScoreR,NewR),  %else
 	 S is max(ScoreL,ScoreR)
     ).
+    
 alpha_beta(min(L,R),Alpha,Beta,S,min(NewL,NewR)) :-
     alpha_beta(L,Alpha,Beta,ScoreL,NewL),
     NewBeta is min(ScoreL,Beta),
@@ -89,7 +92,7 @@ alpha_beta(min(L,R),Alpha,Beta,S,min(NewL,NewR)) :-
 	 S is min(ScoreL,ScoreR)
     ).
      
-     % test
+% --------test-------
 alpha_beta(max(
                min(
                    max(leaf(1,who),leaf(3,know)),
@@ -98,3 +101,34 @@ alpha_beta(max(
                    max(leaf(2,such),leaf(2,fun)),
                    max(leaf(5,!),leaf(4,!)))),
            -10,10,S,T).
+	   
+-------------------n queens--------------------
+% queens(5,solutionList).
+
+queens(N,L):-
+    numlist(1,N,List),  %build-in: generate list[1..N]
+    permutation(List,L),
+    safe(L).
+
+permutation([],[]).
+permutation(List,[Head|Tail]):-  % and add it back in order
+    del(Head,List,List1),  % randomly delete an item each time
+    permutation(List1,Tail).
+
+del(Item,[Item|List],List).  % the item deleted is at 1st position
+del(Item,[Other|List],[Other|List1]):-   % item deleted is in the tail
+    del(Item,List,List1).
+
+safe([]). 
+safe([Queen|Other]):-
+    safe(Other),  % other queens do not attack each other
+    noattack(Queen,Other,1).  % the queen do not attack other queens
+
+noattack(_,[],_).  % Other is empty list --> no attack
+noattack(Y,[Y1|Ylist],Xdist):-   
+    Y1-Y =\= Xdist,   % abs(Y1-Y2) != abs(X1-X2) --> different diagonal
+    Y-Y1 =\= Xdist,
+    Dist1 is Xdist + 1,
+    noattack(Y,Ylist,Dist1).
+  
+-----------------------------------
