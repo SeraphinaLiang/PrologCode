@@ -98,15 +98,19 @@ do_playrow(Player,T,B,NT,NB):-
     play_colorrow(Player,T,B,NT,NB);
     play_numberrow(Player,T,B,NT,NB).
 
-play_colorrow(player(Blocks,Actions),player(NB,NA),T,_,[crow(Picksort)|T],NB):-
+play_colorrow(player(Blocks,Actions),player(NB,NA),T,_,[crow(Picksort)|T],_):-
     pick3blocks(Blocks,Picked,NB),
     is_crow(crow(Picked)),
     sort(Picked,Picksort),
     addEnding(Actions,playrow(crow(Picksort))),
     list_to_set(Actions,NA).
 
-play_numberrow(player(Blocks,Actions),T,B,NT,NB):-!
-    .
+play_numberrow(player(Blocks,Actions),player(NB,NA),T,_,[nrow(Picksort)|T],_):-
+    pick3blocks(Blocks,Picked,NB),
+    is_nrow(nrow(Picked)),
+    sort(Picked,Picksort),
+    addEnding(Actions,playrow(nrow(Picksort))),
+    list_to_set(Actions,NA).
 
 do_playblock(player(Blocks,Actions),T,B,NT,NB):-!.
 
