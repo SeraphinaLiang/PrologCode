@@ -1,3 +1,4 @@
+%-----------question 1----------------
 valid_table([]).
 valid_table([Row|Others]):- 
     valid_row(Row),  % 第一行符不符合
@@ -58,4 +59,46 @@ unique_color(block(_,A),block(_,B)):-
 sorted(block(X,_),block(Y,_),N):-
     X is Y - N.
     
+%----------question 2-----------
+
+%p2 win & p1 lose
+play_game(player([],Action1),player([_|_],Action2),_,_):-
+    addEnding(Action1,lose),addEnding(Action2,win).
+%p1 win & p2 lose
+play_game(player([_|_],Action1),player([],Action2),_,_):-
+    addEnding(Action1,win),addEnding(Action2,lose).
+% both players out of blocks - draw
+play_game(player([],Action1),player([],Action2),_,_):-
+    addEnding(Action1,draw),addEnding(Action2,draw).
+% a player has to draw new block & bag is empty - draw
+do_draw(player(_,Actions),_,[],_,_):-
+    addEnding(Actions,draw).
+play_game(player(_,A1),player(_,A2),_,_):-
+    member(draw,A1),\+member(draw,A2),addEnding(A2,draw);
+    member(draw,A2),\+member(draw,A1),addEnding(A1,draw).
+
+play_game(P1,P2,Table,Bag):-
+    play(P1,Table,Bag,Newtable1,Newbag1),
+    play(P2,Newtable1,Newbag1,Newtable2,Newbag2),
+    play_game(P1,P2,Newtable2,Newbag2).
+
+% play(player(Blocks,Actions),Table,Bag,NewTable,NewBag)
+play(Player,T,B,NT,NB):-
+    do_playrow(Player,T,B,NT,NB),
+    do_playblock(Player,T,B,NT,NB),
+    do_draw(Player,T,B,NT,NB).
+
+do_playrow(Player,T,B,NT,NB):-
+    play_colorrow(Player,T,B,NT,NB);
+    play_numberrow(Player,T,B,NT,NB).
+
+play_colorrow(player(Blocks,Actions),T,B,NT,NB):-.
     
+play_numberrow(player(Blocks,Actions),T,B,NT,NB):-.
+
+do_playblock(player(Blocks,Actions),T,B,NT,NB):-.
+
+do_draw(player(Blocks,Actions),T,B,NT,NB):-.
+
+
+
