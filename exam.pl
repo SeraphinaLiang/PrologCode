@@ -61,6 +61,12 @@ sorted(block(X,_),block(Y,_),N):-
     
 %----------question 2-----------
 
+addEnding([],_).
+addEnding([Ending],Ending):-
+    addEnding([],_).
+addEnding([Head|Actions],Ending):-
+    addEnding(Actions,Ending).
+
 %p2 win & p1 lose
 play_game(player([],Action1),player([_|_],Action2),_,_):-
     addEnding(Action1,lose),addEnding(Action2,win).
@@ -92,13 +98,29 @@ do_playrow(Player,T,B,NT,NB):-
     play_colorrow(Player,T,B,NT,NB);
     play_numberrow(Player,T,B,NT,NB).
 
-play_colorrow(player(Blocks,Actions),T,B,NT,NB):-.
-    
-play_numberrow(player(Blocks,Actions),T,B,NT,NB):-.
+play_colorrow(player(Blocks,Actions),player(NB,NA),T,_,[crow(Picksort)|T],NB):-
+    pick3blocks(Blocks,Picked,NB),
+    is_crow(crow(Picked)),
+    sort(Picked,Picksort),
+    addEnding(Actions,playrow(crow(Picksort))),
+    list_to_set(Actions,NA).
 
-do_playblock(player(Blocks,Actions),T,B,NT,NB):-.
+play_numberrow(player(Blocks,Actions),T,B,NT,NB):-!
+    .
 
-do_draw(player(Blocks,Actions),T,B,NT,NB):-.
+do_playblock(player(Blocks,Actions),T,B,NT,NB):-!.
+
+do_draw(player(Blocks,Actions),T,B,NT,NB):-!.
+
+
+
+pick3blocks(Blocks,[A,B,C],Other):-
+    permutation(Blocks,[A,B,C|Other]).
+
+permutation([],[]).
+permutation(A,[Head|B]):-
+    delete(A,Head,A1),
+    permutation(A1,B).
 
 
 
