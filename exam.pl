@@ -62,24 +62,42 @@ sorted(block(X,_),block(Y,_),N):-
 %----------question 2-----------
 
 %p2 win & p1 lose
-play_game(player([],Action1),player([_|_],Action2),_,_):-
-    addEnding(Action1,lose),addEnding(Action2,win).
+play_game(player([],_),player([_|_],_),_,_,_,_).
 %p1 win & p2 lose
-play_game(player([_|_],Action1),player([],Action2),_,_):-
-    addEnding(Action1,win),addEnding(Action2,lose).
+play_game(player([_|_],_),player([],_),_,_,_,_).
 % both players out of blocks - draw
-play_game(player([],Action1),player([],Action2),_,_):-
-    addEnding(Action1,draw),addEnding(Action2,draw).
-% add draw action to the other player
-play_game(player(_,A1),player(_,A2),_,_):-
-    member(draw,A1),\+member(draw,A2),addEnding(A2,draw);
-    member(draw,A2),\+member(draw,A1),addEnding(A1,draw).
+play_game(player([],_),player([],_),_,_,_,_).
+% add draw to other
+play_game(player(_,_),player(_,_),_,_,_,_).
+% end
+play_game(_,_,end,end,_,_).
 
 % play_game(player1,player2,Table,Bag)
-play_game(P1A,P2A,Table,Bag):-
+play_game(P1A,P2A,Table,Bag,P1B,P2B):-
     play(P1A,P1B,Table,Bag,Newtable1,Newbag1),
     play(P2A,P2B,Newtable1,Newbag1,Newtable2,Newbag2),
-    play_game(P1B,P2B,Newtable2,Newbag2).
+    % not end
+    \+is_end(P1B,P2B,Newtable2,Newbag2),
+    play_game(P1B,P2B,Newtable2,Newbag2,_,_);
+    % end
+    is_end(P1B,P2B,_,_),
+    play_game(P1B,P2B,end,end,_,_).
+
+is_end(player(_,A1),player(_,A2),_,_):-
+    %p2 win & p1 lose
+    play_game(player([],A1),player([_|_],A2),_,_,_,_),
+    addEnding(A1,lose),addEnding(A2,win);
+    %p1 win & p2 lose
+    play_game(player([_|_],A1),player([],A2),_,_,_,_),
+    addEnding(A1,win),addEnding(A2,lose);
+    % both players out of blocks - draw
+    play_game(player([],A1),player([],A2),_,_,_,_),
+    addEnding(A1,draw),addEnding(A2,draw);
+    % add draw to other player
+    play_game(player(_,A1),player(_,A2),_,_,_,_),
+    member(draw,A1),\+member(draw,A2),addEnding(A2,draw);
+    play_game(player(_,A1),player(_,A2),_,_,_,_),
+    member(draw,A2),\+member(draw,A1),addEnding(A1,draw).
 
 % play(playerOrigin,playerAfter,Table,Bag,NewTable,NewBag)
 play(P1,P2,T,B,NT,NB):-
@@ -135,7 +153,7 @@ extendnrow([B|Blocks],[nrow(R)|T],B,TheR,Blocks,T):-
     extendnrow([B|Blocks],T,B,TheR,Blocks,T);
     extendnrow(Blocks,[nrow(R)|T],B,TheR,Blocks,T).
 
-% do_draw(player(Blocks,Actions),new_player(Blocks,Actions),Table,Bag,NewTable,NewBag)
+% play(player(Blocks,Actions),new_player(Blocks,Actions),Table,Bag,NewTable,NewBag)
 do_draw(player(Blocks,Actions),player([Block|Blocks],NA),_,[Block|Others],_,Others):-
     addEnding(Actions,draw(Block)),
     list_to_set(Actions,NA).
@@ -153,13 +171,12 @@ permutation(A,[Head|B]):-
     delete(A,Head,A1),
     permutation(A1,B).
 
-% add item to end of the list
-% addEnding(Item,List)
 addEnding([],_).
 addEnding([Ending],Ending):-
     addEnding([],_).
 addEnding([_|Actions],Ending):-
     addEnding(Actions,Ending).
-
-
+    
+    
+    
 
