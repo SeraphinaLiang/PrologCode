@@ -69,10 +69,9 @@ play_game(player([_|_],_),player([],_),_,_,_,_).
 play_game(player([],_),player([],_),_,_,_,_).
 % add draw to other
 play_game(player(_,_),player(_,_),_,_,_,_).
-% end
-play_game(_,_,end,end,_,_).
 
-% play_game(player1,player2,Table,Bag)
+
+% play_game(player1,player2,Table,Bag,newplayer1,newplayer2)
 play_game(P1A,P2A,Table,Bag,P1B,P2B):-
     play(P1A,P1B,Table,Bag,Newtable1,Newbag1),
     play(P2A,P2B,Newtable1,Newbag1,Newtable2,Newbag2),
@@ -80,8 +79,7 @@ play_game(P1A,P2A,Table,Bag,P1B,P2B):-
     \+is_end(P1B,P2B,Newtable2,Newbag2),
     play_game(P1B,P2B,Newtable2,Newbag2,_,_);
     % end
-    is_end(P1B,P2B,_,_),
-    play_game(P1B,P2B,end,end,_,_).
+    is_end(P1B,P2B,_,_).
 
 is_end(player(_,A1),player(_,A2),_,_):-
     %p2 win & p1 lose
@@ -178,5 +176,8 @@ addEnding([_|Actions],Ending):-
     addEnding(Actions,Ending).
     
     
-    
+% test case :
+P1Blocks = [block(1,red),block(2,red),block(3,red),block(2,blue)],
+P2Blocks = [block(5,red),block(5,yellow),block(5,black),block(4,red)],
+play_game(player(P1Blocks,P1Act),player(P2Blocks,P2Act),[],[block(5,blue)]).
 
