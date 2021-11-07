@@ -61,12 +61,6 @@ sorted(block(X,_),block(Y,_),N):-
     
 %----------question 2-----------
 
-addEnding([],_).
-addEnding([Ending],Ending):-
-    addEnding([],_).
-addEnding([Head|Actions],Ending):-
-    addEnding(Actions,Ending).
-
 %p2 win & p1 lose
 play_game(player([],Action1),player([_|_],Action2),_,_):-
     addEnding(Action1,lose),addEnding(Action2,win).
@@ -77,27 +71,31 @@ play_game(player([_|_],Action1),player([],Action2),_,_):-
 play_game(player([],Action1),player([],Action2),_,_):-
     addEnding(Action1,draw),addEnding(Action2,draw).
 % a player has to draw new block & bag is empty - draw
-do_draw(player(_,Actions),_,[],_,_):-
-    addEnding(Actions,draw).
+do_draw(player(_,Actions),player(_,NA),_,[],_,_):-
+    addEnding(Actions,draw),
+    list_to_set(Actions,NA).
+    
 play_game(player(_,A1),player(_,A2),_,_):-
     member(draw,A1),\+member(draw,A2),addEnding(A2,draw);
     member(draw,A2),\+member(draw,A1),addEnding(A1,draw).
 
-play_game(P1,P2,Table,Bag):-
-    play(P1,Table,Bag,Newtable1,Newbag1),
-    play(P2,Newtable1,Newbag1,Newtable2,Newbag2),
-    play_game(P1,P2,Newtable2,Newbag2).
+% play_game(player1,player2,Table,Bag)
+play_game(P1A,P2A,Table,Bag):-
+    play(P1A,P1B,Table,Bag,Newtable1,Newbag1),
+    play(P2A,P2B,Newtable1,Newbag1,Newtable2,Newbag2),
+    play_game(P1B,P2B,Newtable2,Newbag2).
 
-% play(player(Blocks,Actions),Table,Bag,NewTable,NewBag)
-play(Player,T,B,NT,NB):-
-    do_playrow(Player,T,B,NT,NB),
-    do_playblock(Player,T,B,NT,NB),
-    do_draw(Player,T,B,NT,NB).
+% play(playerOrigin,playerAfter,Table,Bag,NewTable,NewBag)
+play(P1,P2,T,B,NT,NB):-
+    do_playrow(P1,P2,T,B,NT,NB),
+    do_playblock(P1,P2,T,B,NT,NB),
+    do_draw(P1,P2,T,B,NT,NB).
 
-do_playrow(Player,T,B,NT,NB):-
-    play_colorrow(Player,T,B,NT,NB);
-    play_numberrow(Player,T,B,NT,NB).
+do_playrow(P1,P2,T,B,NT,NB):-
+    play_colorrow(P1,P2,T,B,NT,NB);
+    play_numberrow(P1,P2,T,B,NT,NB).
 
+%play_colorrow(player_origin(Block,Actions),player_after(newBlocks,newAction),Table,Bag,NewTable,NewBag)
 play_colorrow(player(Blocks,Actions),player(NB,NA),T,_,[crow(Picksort)|T],_):-
     pick3blocks(Blocks,Picked,NB),
     is_crow(crow(Picked)),
@@ -112,11 +110,39 @@ play_numberrow(player(Blocks,Actions),player(NB,NA),T,_,[nrow(Picksort)|T],_):-
     addEnding(Actions,playrow(nrow(Picksort))),
     list_to_set(Actions,NA).
 
-do_playblock(player(Blocks,Actions),T,B,NT,NB):-!.
+% extend crow or nrow
+do_playblock(player(Blocks,Actions),player(NB,NA),T,_,[TheRow|NT],_):-
+    extendcrow(Blocks,T,TheBlock,TheRow,NB,NT),
+    addEnding(Actions,playblock(TheBlock,crow(TheRow))),
+    list_to_set(Actions,NA);
+    extendnrow(Blocks,T,TheBlock,TheRow,NB,NT),
+    addEnding(Actions,playblock(TheBlock,nrow(TheRow))),
+    list_to_set(Actions,NA).
 
-do_draw(player(Blocks,Actions),T,B,NT,NB):-!.
+extendcrow([],_,_,_,_,_).
+extendcrow(_,[],_,_,_,_).
+extendcrow([B|Blocks],[crow(R)|T],B,TheR,Blocks,T):-
+    addEnding(B,R),
+    sort(R,TheR),
+    is_crow(crow(TheR));
+    extendcrow([B|Blocks],T,B,TheR,Blocks,T);
+    extendcrow(Blocks,[crow(R)|T],B,TheR,Blocks,T).
 
+extendnrow([],_,_,_,_,_).
+extendnrow(_,[],_,_,_,_).
+extendnrow([B|Blocks],[nrow(R)|T],B,TheR,Blocks,T):-
+    addEnding(B,R),
+    is_nrow(nrow(R)),
+    TheR = R;
+    TheR = [B|R],
+    is_nrow(nrow(TheR));
+    extendnrow([B|Blocks],T,B,TheR,Blocks,T);
+    extendnrow(Blocks,[nrow(R)|T],B,TheR,Blocks,T).
 
+% play(player(Blocks,Actions),new_player(Blocks,Actions),Table,Bag,NewTable,NewBag)
+do_draw(player(Blocks,Actions),player([Block|Blocks],NA),_,[Block|Others],_,Others):-
+    addEnding(Actions,draw(Block)),
+    list_to_set(Actions,NA).
 
 pick3blocks(Blocks,[A,B,C],Other):-
     permutation(Blocks,[A,B,C|Other]).
@@ -126,5 +152,10 @@ permutation(A,[Head|B]):-
     delete(A,Head,A1),
     permutation(A1,B).
 
+addEnding([],_).
+addEnding([Ending],Ending):-
+    addEnding([],_).
+addEnding([Head|Actions],Ending):-
+    addEnding(Actions,Ending).
 
 
