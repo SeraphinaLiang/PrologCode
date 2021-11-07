@@ -70,11 +70,7 @@ play_game(player([_|_],Action1),player([],Action2),_,_):-
 % both players out of blocks - draw
 play_game(player([],Action1),player([],Action2),_,_):-
     addEnding(Action1,draw),addEnding(Action2,draw).
-% a player has to draw new block & bag is empty - draw
-do_draw(player(_,Actions),player(_,NA),_,[],_,_):-
-    addEnding(Actions,draw),
-    list_to_set(Actions,NA).
-    
+% add draw action to the other player
 play_game(player(_,A1),player(_,A2),_,_):-
     member(draw,A1),\+member(draw,A2),addEnding(A2,draw);
     member(draw,A2),\+member(draw,A1),addEnding(A1,draw).
@@ -139,9 +135,14 @@ extendnrow([B|Blocks],[nrow(R)|T],B,TheR,Blocks,T):-
     extendnrow([B|Blocks],T,B,TheR,Blocks,T);
     extendnrow(Blocks,[nrow(R)|T],B,TheR,Blocks,T).
 
-% play(player(Blocks,Actions),new_player(Blocks,Actions),Table,Bag,NewTable,NewBag)
+% do_draw(player(Blocks,Actions),new_player(Blocks,Actions),Table,Bag,NewTable,NewBag)
 do_draw(player(Blocks,Actions),player([Block|Blocks],NA),_,[Block|Others],_,Others):-
     addEnding(Actions,draw(Block)),
+    list_to_set(Actions,NA).
+
+% a player has to draw new block & bag is empty - draw
+do_draw(player(_,Actions),player(_,NA),_,[],_,_):-
+    addEnding(Actions,draw),
     list_to_set(Actions,NA).
 
 pick3blocks(Blocks,[A,B,C],Other):-
@@ -152,10 +153,13 @@ permutation(A,[Head|B]):-
     delete(A,Head,A1),
     permutation(A1,B).
 
+% add item to end of the list
+% addEnding(Item,List)
 addEnding([],_).
 addEnding([Ending],Ending):-
     addEnding([],_).
-addEnding([Head|Actions],Ending):-
+addEnding([_|Actions],Ending):-
     addEnding(Actions,Ending).
+
 
 
