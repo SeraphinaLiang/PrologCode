@@ -1,2 +1,2 @@
 # PrologCode
-# Dutch
+prolog code in course
