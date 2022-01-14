@@ -1,4 +1,4 @@
-% graph typical question
+% graph typical question  https://swish.swi-prolog.org/p/graphtree.pl
 % 1. find a path between 2 given nodes
 % 2. find a subgraph e.g spanning tree
 
