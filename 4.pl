@@ -92,7 +92,7 @@ checkNode([X|List],L):-
 check_even_at(X,L):-
     list_k(X,L,List), % highway list with node k
     sort(List,SL),
-    length(SL,Length),!, % backtracking affect result
+    length(SL,Length),!, % backtracking affect result, 有判断结果的，截断backtracking
     N is Length mod 2,
     N =:= 0.
 
