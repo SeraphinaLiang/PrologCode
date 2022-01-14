@@ -41,7 +41,7 @@ fib(N,F) :-
     fib(N1,F1),
     F is F1 + F2.
 
-%-------------holiday lights------------
+%-------------holiday lights------------   https://swish.swi-prolog.org/p/RBGRTH.pl
 
 % Example knowledge base
 highway(1,2,yellow).
@@ -54,37 +54,55 @@ highway(3,5,a).
 highway(3,4,c).
 highway(5,4,d).
 
-
 color(X,Color):-
     highway(X,_,Color);
     highway(_,X,Color).
 
+node(X):-
+    highway(_,X,_);
+    highway(X,_,_).
+
 check():-
-    highway(X,_,_),
-    check_even_at(X),
-    check_colors_at(X),
-    highway(_,Y,_),
-    check_even_at(Y),
-    check_colors_at(Y).
+    findall(highway(A,B,C),highway(A,B,C),List), % List : all highways
+    sort(List,L),!, % Duplicates are removed
+    check_all_node(L).
+    
+check_all_node(List):-
+    findall(X,node(X),ListNode),
+    sort(ListNode,SortListNode), % [1,2]
+    checkNode(SortListNode,List).
 
-check_even_at(X):-
-    setof(X,highway(X,_,_),L1),
-    length(L1,Length1),
-    setof(X,highway(_,X,_),L2),
-    length(L2,Length2),
-    (Length1+Length2) mod 2 =:= 0.
+checkNode([],_).  % manually check all node
+checkNode([X|List],L):-
+    check_even_at(X,L),
+    check_colors_at(X,L),
+    checkNode(List,L).
 
-check_colors_at(X):-
-    setof(X,highway(X,_,_),L1),
-    setof(X,highway(_,X,_),L2),
-    append(L1,L2,L),
-    check_color(X,L).
+check_even_at(X,L):-
+    list_k(X,L,List), % highway list with node k
+    sort(List,SL),
+    length(SL,Length),!, % backtracking affect result
+    N is Length mod 2,
+    N =:= 0.
+
+check_colors_at(X,L):-
+    list_k(X,L,List), % highway list with node k
+    sort(List,SL),
+    check_color(X,SL).
 
 check_color(X,L):-
     color(X,Color),
     check_yes(X,Color,L,0,Len1),
-    check_no(X,Color,L,0,Len2),
+    check_no(X,Color,L,0,Len2),!, % backtracking affect result
     Len2 >= Len1.
+
+list_k(_,[],[]).
+list_k(X,[highway(X,A,B)|L1],[highway(X,A,B)|L2]):-
+    list_k(X,L1,L2).
+list_k(X,[highway(A,X,B)|L1],[highway(A,X,B)|L2]):-
+    list_k(X,L1,L2).
+list_k(X,[_|L1],L2):-
+    list_k(X,L1,L2).
 
 check_yes(_,_,[],Len,Len).
 check_yes(X,Color,[highway(X,_,Color)|L],Len,Length):-
@@ -104,6 +122,7 @@ check_no(X,Color,[highway(_,X,Color)|L],Len,Length):-
 check_no(X,Color,[_|L],Len,Length):-
     Len1 is Len + 1,
     check_no(X,Color,L,Len1,Length).
+
 
 
 
