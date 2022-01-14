@@ -1,3 +1,14 @@
+肯定条件：遍历所有可能，直到找到所有true的组合。
+否定条件：只要一个否定，就直接否定，不继续遍历。
+例子：
+n(1).
+n(2).
+n(3).
+
+p(X):- \+(\+ n(X)).  % p(X). X=1
+
+q(X):- n(X). % q(X). X=1,2,3
+
 %------------junior interpreter-----------------
 
 % The mini-meta-interpreter without memoization.
