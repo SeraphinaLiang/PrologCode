@@ -47,6 +47,8 @@ degree(Node,N) :-
 
 
 只要有一个使得 [ node(X), (\+ check_even_at(X) ; \+ check_colors_at(X)) ] 为真，则check为假，程序结束。
+\+ (...) 的prediacte 只要有一个为true/false，程序就结束。
+
 % check/0: checks the first constraint and the second constraint
 check :-
   \+ (node(X), (\+ check_even_at(X) ; \+ check_colors_at(X))).
