@@ -75,13 +75,13 @@ node(X):-
 
 check():-
     findall(highway(A,B,C),highway(A,B,C),List), % List : all highways
-    sort(List,L),!, % Duplicates are removed
+    sort(List,L), % Duplicates are removed
     check_all_node(L).
     
 check_all_node(List):-
     findall(X,node(X),ListNode),
-    sort(ListNode,SortListNode), % [1,2]
-    checkNode(SortListNode,List).
+    sort(ListNode,SortListNode),     % [1,2]
+    checkNode(SortListNode,List),!.
 
 checkNode([],_).  % manually check all node
 checkNode([X|List],L):-
@@ -92,13 +92,13 @@ checkNode([X|List],L):-
 check_even_at(X,L):-
     list_k(X,L,List), % highway list with node k
     sort(List,SL),
-    length(SL,Length),!, % backtracking affect result, 有判断结果的，截断backtracking
+    length(SL,Length),!, % backtracking affect result
     N is Length mod 2,
     N =:= 0.
 
 check_colors_at(X,L):-
     list_k(X,L,List), % highway list with node k
-    sort(List,SL),
+    sort(List,SL),!,
     check_color(X,SL).
 
 check_color(X,L):-
@@ -133,7 +133,6 @@ check_no(X,Color,[highway(_,X,Color)|L],Len,Length):-
 check_no(X,Color,[_|L],Len,Length):-
     Len1 is Len + 1,
     check_no(X,Color,L,Len1,Length).
-
-
-
+    
+    
 
