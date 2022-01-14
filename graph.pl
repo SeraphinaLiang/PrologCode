@@ -62,6 +62,32 @@ node(N,Graph):-
 %    - T is connected
 %    - T has no cycle
 
+stree(Graph,Tree):-
+    subset(Graph,Tree),
+    tree(Tree),
+    covers(Tree,Graph).
 
+tree(T):-
+    connected(T),
+    \+hasacycle(T).
+
+connected(G):-
+    \+(node(A,G),node(B,G),\+path(A,B,G,_)).
+
+hasacycle(G):-
+    adjacent(N1,N2,G),
+    path(N1,N2,G,[N1,X,Y|_]). % path length > 1
+
+% covers(Tree,Graph) : every node in Graph is in Tree
+covers(Tree,Graph):-
+    \+(node(N,Graph),\+node(N,Tree)).
+
+% subset(Set,Subset)
+subset([],[]).
+subset([X|L1],[X|L2]):-
+    subset(L1,L2).
+subset([_X|L1],L2):-
+    subset(L1,L2).
+    
 
 
