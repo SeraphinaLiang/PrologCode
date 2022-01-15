@@ -240,5 +240,101 @@ unique_color(L):-
     length(List,List_len),
     SLN =:= List_len.
     
+----question 2 -- unfinish--------
+
+% draw
+play_game(player([],[draw|A]),player([],[draw|B]),_,_):-
+    play_game(player([],A),player([],B),_,_).
+play_game(player([],_),player([],_),_,_).
+
+% one player win
+play_game(player([],[win|A]),player(_,[lose|B]),_,_):- 
+    play_game(player([],A),player(_,B),_,_).
+play_game(player([],_),player(_,_),_,_).
+
+play_game(player(_,[lose|A]),player([],[win|B]),_,_):- 
+    play_game(player(_,A),player([],B),_,_).
+play_game(player(_,_),player([],_),_,_).
+
+play_game(P1,P2,Table,Bag):- 
+    (   % P1 playcrow
+    playrow_action(crow(Blocks),Newrow),
+    update_player_extract_block(P1,NP1,Blocks,playrow(Blocks)),
+    NT1 = [Newrow|Table];
+        % P1 playnrow
+    playrow_action(nrow(Blocks),Newrow),
+    update_player_extract_block(P1,NP1,Blocks,playrow(Blocks)),
+    NT1 = [Newrow|Table];
+        % p1 playblock
+    member(Row,Table),
+    get_a_block(P1,Block,NPT1),
+    playblock_action(Block,Row,Newrow),
+    add_action(NPT1,NP1,playblock(Block,Row)),
+    delete(Table,Row,Tabledelete),
+    NT1 = [Newrow|Tabledelete];
+        % p1 draw block
+    draw_block_action(Bag,Block,Newbag)
+    )
+    ,
+    (    % P2 playrow
+    playrow_action(crow(Blocks),Newrow),
+    update_player_extract_block(P2,NP2,Blocks,playrow(Blocks)),
+    NT2 = [Newrow|NT1];
+         % P2 playnrow
+    playrow_action(nrow(Blocks),Newrow),
+    update_player_extract_block(P2,NP2,Blocks,playrow(Blocks)),
+    NT2 = [Newrow|NT1];
+         % p2 playblock
+    member(Row,NT1),
+    get_a_block(P2,Block,NPT2),
+    playblock_action(Block,Row,Newrow),
+    add_action(NPT2,NP2,playblock(Block,Row)),
+    delete(NT1,Row,Tabledelete),
+    NT2 = [Newrow|Tabledelete];
+         % p2 draw block
+    draw_block_action(Bag,Block,Newbag)
+    ),
+    play_game(NP1,NP2,NT2,Newbag).
+
+add_action(player(B,A),player(B,[Action|A]),Action).
+
+get_a_block(player(B,A),Block,player(NB,A)):-
+    member(Block,B),
+    delete(B,Block,NB).
+
+update_player_extract_block(player(OB,OA),player(NB,NA),Blocks,Action):-
+    select(Blocks,OB,NB),
+    NA = [Action|OA].
+
+playrow_action(crow(Blocks),Newrow):-
+    length(Blocks,Length),
+    Length =:= 3,
+    identical_number(Blocks),
+    unique_color(Blocks),
+    sort(Blocks,Newrow).
+
+playrow_action(nrow(Blocks),Newrow):-
+    length(Blocks,Length),
+    Length =:= 3,
+    identical_color(Blocks),
+    succ_number(Blocks),
+    sort(Blocks,Newrow).
+
+playblock_action(Block,Row,Newrow):-
+    %on the start or end of an existing nrow
+    playblock_action_nrow(Block,Row,Newrow);
+    %in an existing crow and resorting the row
+    playblock_action_crow(Block,Row,Newrow).
     
+playblock_action_nrow(B,nrow(L),nrow(NL)):-
+    append([B],L,NL);
+    append(L,[B],NL).
+
+playblock_action_crow(B,crow(L),crow(NL)):-
+    append([B],L,Temp),
+    sort(Temp,NL).
+
+draw_block_action([Block|Newbag],Block,Newbag).
+    
+
     
