@@ -65,6 +65,36 @@ highway(3,5,a).
 highway(3,4,c).
 highway(5,4,d).
 
+neighbor(X,Y):-
+    highway(X,Y,_);
+    highway(Y,X,_).
+
+tour(T):-
+    check(),
+    findall(highway(A,B,C),highway(A,B,C),List),
+    sort(List,L),!, % L: all highways
+    findall(Tour,get_a_tour(L,Tour),LT), % get all tour
+    sort(LT,[T|_]).
+    
+get_a_tour(L,T):-
+    % spread(currentNode,endnode,visited,notvisit,tour)
+    spread(1,1,[],L,Tour),
+    reverse(Tour,T).
+
+spread(End,End,Tour,[],Tour).
+spread(Cur,End,Visited,Notvisit,Tour):-
+   (   neighbor(Cur,Next),
+       select(highway(Cur,Next,Color),Notvisit,NV)
+   ;
+       neighbor(Next,Cur),
+       select(highway(Next,Cur,Color),Notvisit,NV)
+   ),
+   check_next(Color,Visited),
+   spread(Next,End,[Next-Color|Visited],NV,Tour).
+
+check_next(_,[]).
+check_next(C,[_-C1|_]):- C\==C1.
+
 color(X,Color):-
     highway(X,_,Color);
     highway(_,X,Color).
