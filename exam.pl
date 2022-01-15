@@ -181,3 +181,64 @@ P1Blocks = [block(1,red),block(2,red),block(3,red),block(2,blue)],
 P2Blocks = [block(5,red),block(5,yellow),block(5,black),block(4,red)],
 play_game(player(P1Blocks,P1Act),player(P2Blocks,P2Act),[],[block(5,blue)]).
 
+
+% ----------my version 2 with lots of build in-------------------------
+valid_table(Table):-
+    check_row(Table).
+
+check_row([]).
+check_row([Row|L]):-
+    check_3_length(Row),
+    color_rule(Row),
+    number_rule(Row),
+    check_row(L).
+
+check_3_length(crow(List)):-
+    length(List,Len),
+    Len >= 3.
+check_3_length(nrow(List)):-
+    length(List,Len),
+    Len >= 3.
+
+%color rule for crow
+color_rule(crow(List)):-
+    identical_number(List),
+    unique_color(List).
+color_rule(nrow(_)).
+
+% number rule for nrow
+number_rule(nrow(List)):-
+    identical_color(List),
+    succ_number(List).
+number_rule(crow(_)).
+
+succ_number(L):-
+    findall(N,member(block(N,_),L),List),!,
+    consecutive(List).
+
+consecutive([_]).
+consecutive([X,Y|L]):-
+    X + 1 =:= Y,
+    consecutive([Y|L]).
+
+identical_number(L):-
+    findall(N,member(block(N,_),L),List),
+    sort(List,SL),
+    length(SL,SLN),
+    SLN =:= 1.
+
+identical_color(L):-
+    findall(C,member(block(_,C),L),List),
+    sort(List,SL),
+    length(SL,SLN),
+    SLN =:= 1.
+
+unique_color(L):-
+    findall(C,member(block(_,C),L),List),
+    sort(List,SL),
+    length(SL,SLN),
+    length(List,List_len),
+    SLN =:= List_len.
+    
+    
+    
