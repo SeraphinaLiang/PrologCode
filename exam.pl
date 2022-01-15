@@ -182,7 +182,7 @@ P2Blocks = [block(5,red),block(5,yellow),block(5,black),block(4,red)],
 play_game(player(P1Blocks,P1Act),player(P2Blocks,P2Act),[],[block(5,blue)]).
 
 
-% ----------my version 2 with lots of build in-------------------------
+% ----------my version 2 with lots of build in-------------------------  https://swish.swi-prolog.org/p/bYDKyewp.pl
 valid_table(Table):-
     check_row(Table).
 
