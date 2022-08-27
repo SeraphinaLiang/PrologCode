@@ -164,5 +164,52 @@ check_no(X,Color,[_|L],Len,Length):-
     Len1 is Len + 1,
     check_no(X,Color,L,Len1,Length).
     
+-------- question 1 build-in---------------
+
+connect(A,B):-
+    highway(A,B,_);
+    highway(B,A,_).
+
+get_color(A,C):-
+    highway(A,_,C);
+    highway(_,A,C).
+
+node(A):-
+    highway(A,_,_);
+    highway(_,A,_).
+
+check():-
+    findall(A,node(A),List),
+    check_list(List).
+
+check_list([]).
+check_list([X|L]):-
+    check_even_at(X),
+    check_colors_at(X),
+    check_list(L).
+
+check_even_at(X):-
+    findall(connect(X,_),connect(X,_),List),
+    length(List,Len),
+    Len mod 2 =:= 0.
+
+
+same_color(_,[],0).
+same_color(X,[Y|L],Num):-
+    X == Y,
+    same_color(X,L,Num1),
+    Num is Num1+1;
+    same_color(X,L,Num1),
+    Num is Num1.
     
+
+ok_number(X,L):-
+    same_color(X,L,Num1),
+    length(L,Len),
+    Num2 is (Len - Num1),
+    Num2 >= Num1.
+
+check_colors_at(X):-
+    findall(C,get_color(X,C),List),
+    forall(member(Elem,List),ok_number(Elem,List)).
 
