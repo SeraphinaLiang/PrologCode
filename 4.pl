@@ -214,6 +214,9 @@ check_colors_at(X):-
     forall(member(Elem,List),ok_number(Elem,List)).
 
 ---------------------------------------------------
+
+https://swish.swi-prolog.org/p/railway.pl
+
 highway(1,3,red).
 highway(3,1,yellow).
 highway(2,3,blue).
