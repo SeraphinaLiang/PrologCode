@@ -213,3 +213,51 @@ check_colors_at(X):-
     findall(C,get_color(X,C),List),
     forall(member(Elem,List),ok_number(Elem,List)).
 
+---------------------------------------------------
+highway(1,3,red).
+highway(3,1,yellow).
+highway(2,3,blue).
+highway(3,2,black).
+
+node(X):-
+    highway(X,_,_);
+    highway(_,X,_).
+
+link(X,Y):-
+    highway(X,Y,_);
+    highway(Y,X,_).
+
+color(X,C):-
+    highway(X,_,C);
+    highway(_,X,C).
+
+check():-
+    findall(X,node(X),List),
+    sort(List,SL),
+    forall(member(Y,SL),checkat(Y)).
+
+checkat(Y):-
+    check_even_at(Y),
+    check_colors_at(Y).
+
+check_even_at(N):-
+    findall(link(N,_),link(N,_),List),
+    length(List,Len),
+    mod(Len,2) =:= 0.
+
+check_colors_at(Y):-
+    findall(C,color(Y,C),LC),
+    forall(member(I,LC),ok_color(I,LC)).
+
+ok_color(I,LC):-
+    equalnum(I,LC,0,E),
+    length(LC,LEN),
+    NE is LEN - E,!,
+    NE >=E.
+
+equalnum(_,[],N,N).
+equalnum(X,[Y|L],S,N):-
+    X == Y,
+    equalnum(X,L,S+1,N);
+    equalnum(X,L,S,N).
+    
