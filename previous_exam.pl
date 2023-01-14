@@ -101,10 +101,10 @@ compress([], Acc, RevAcc):-
 	reverse(Acc, RevAcc).
 
 compress(Uncompressed, Acc, Compressed) :-
-	findall(Id-T, (code(Code, Id), append(Code, T, Uncompressed)), Poss),
+	findall(Id-T, (code(Code, Id), append(Code, T, Uncompressed)), Poss),  % must find all solution all at once
 	length(Poss, NbPos),
 	NbPos > 0,
-	!,
+	!,   % if no match
 	member(Id-T, Poss),
 	compress(T, [Id|Acc], Compressed).
 
