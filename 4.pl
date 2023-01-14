@@ -264,3 +264,29 @@ equalnum(X,[Y|L],S,N):-
     equalnum(X,L,S+1,N);
     equalnum(X,L,S,N).
     
+    
+tour(T):-
+    check(),
+    findall(highway(_,_,_),highway(_,_,_),LHW),
+    findall(Tour,findatour(Tour,LHW),LT),
+    sort(LT,[T|_]).
+
+findatour(T,L):-
+    spread(1,1,[],L,T1),
+    reverse(T1,T).
+
+% spread(currentNode,endnode,visited,notvisit,tour)
+spread(END,END,T,[],T).
+spread(CUR,END,VISIT,NOTV,TOUR):-
+    highway(CUR,NEXT,C1),
+    check_color_next(VISIT,C1),
+    select(highway(CUR,NEXT,C1),NOTV,NEWNOTVISIT),
+    spread(NEXT,END,[NEXT-C1|VISIT],NEWNOTVISIT,TOUR);
+    highway(NEXT,CUR,C2),
+    check_color_next(VISIT,C2),
+    select(highway(NEXT,CUR,C2),NOTV,NEWNOTVISIT),
+    spread(NEXT,END,[NEXT-C2|VISIT],NEWNOTVISIT,TOUR).
+
+check_color_next([],_).
+check_color_next([_-C1|_],C2):-
+    C1 \== C2.
