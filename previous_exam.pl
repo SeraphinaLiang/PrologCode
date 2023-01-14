@@ -41,7 +41,7 @@ compress1(UN,[Y|COM]):-
     code(X,Y),
     prefix(X,UN),
     length(X,LEN),
-    LEN >=1,
+    LEN >=1,!,    % if no match
     strip(X,UN,NEW),
     compress1(NEW,COM).
 compress1(UN,NEWCOM):-
