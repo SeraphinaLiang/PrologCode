@@ -116,5 +116,36 @@ optcompression(Uncompressed, Compressed):-
 	sort(Poss, [L-C|SortedPossTail]),
 	member(L-Compressed, [L-C|SortedPossTail]).
     
+-------------- pipeline------------------
+
+pumpjack(1,1,north).
+pumpjack(3,6,east).
+pumpjack(6,15,west).
+pumpjack(21,9,south).
+
+% the question is rather ridiculous!
+
+% PART I: pumpjacks.
+pumpjack_output(pumpjack(A,B,north),X,Y) :-
+    X is A+1,
+    Y is B+2.
+pumpjack_output(pumpjack(A,B,east),X,Y) :-
+    X is A+2,
+    Y is B-1.
+pumpjack_output(pumpjack(A,B,south),X,Y) :-
+    X is A-1,
+    Y is B-2.
+pumpjack_output(pumpjack(A,B,west),X,Y) :-
+    X is A-2,
+    Y is B+1.
+    
+outputs(Outputs) :-
+        % the order of pumpjack(A,B,D) and pumpjack_output(pumpjack(A,B,D),X,Y) matters
+    findall((X,Y),(pumpjack(A,B,D),pumpjack_output(pumpjack(A,B,D),X,Y)),Outputs).
+
+overlaps_pumpjack(pumpjack(X1,Y1,_),X,Y) :-
+    X >= X1-1, X =< X1+1,
+    Y >= Y1-1, Y =< Y1+1.
+    
     
     
