@@ -117,6 +117,7 @@ optcompression(Uncompressed, Compressed):-
 	member(L-Compressed, [L-C|SortedPossTail]).
     
 -------------- pipeline------------------
+http://cplint.ml.unife.it/p/pipeline_exam.pl
 
 pumpjack(1,1,north).
 pumpjack(3,6,east).
