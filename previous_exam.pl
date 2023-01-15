@@ -1,3 +1,4 @@
+--------------------- compression-------------------------
 https://swish.swi-prolog.org/p/compress_exam.pl
 
 code([a,b], 1).
@@ -71,11 +72,7 @@ find_len([X|List],[N|Len]):-
     length(X,N),
     find_len(List,Len).
 
-
-
-
-
--------------solutions-------------
+-------------solutions--compression---------
 
 
 decompress(Compressed, Decompressed):-
@@ -117,6 +114,7 @@ optcompression(Uncompressed, Compressed):-
 	member(L-Compressed, [L-C|SortedPossTail]).
     
 -------------- pipeline------------------
+
 http://cplint.ml.unife.it/p/pipeline_exam.pl
 
 pumpjack(1,1,north).
@@ -231,5 +229,9 @@ unify_labels(Labels,N1,N2) :-
     !,
     L1 = L2.
 
-   
+-----------------Sokoban------------------
+
+http://cplint.ml.unife.it/p/Sokoban.pl
+
+
     
