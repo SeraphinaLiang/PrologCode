@@ -233,5 +233,77 @@ unify_labels(Labels,N1,N2) :-
 
 http://cplint.ml.unife.it/p/Sokoban.pl
 
+reachable(Sokaban,(X,Y)):-
+    get_unoccupy(Sokaban,Free),
+    get_player_pos(Sokaban,(O1,O2)),
+    findroute((O1,O2),(X,Y),Free).
+
+findroute((TX,TY),(TX,TY),_).
+findroute((PX,PY),(TX,TY),Free):-
+    FX is PX,!,
+    member((FX,FY),Free),
+    abs(PY- FY,1),!,
+    delete(Free,(FX,FY),New),
+    findroute((FX,FY),(TX,TY),New).
+findroute((PX,PY),(TX,TY),Free):-
+    FY is PY,!,
+    member((FX,FY),Free),
+    abs(PX - FX,1),!,
+    delete(Free,(FX,FY),New),
+    findroute((FX,FY),(TX,TY),New).
+    
+get_player_pos(sokoban(_,_,(O1,O2),_),(O1,O2)).
+
+get_unoccupy(sokoban(W,H,_,L),Unoccupy):-
+    W1 is W-1,
+    H1 is H-1,
+    numlist(0,W1,N1), % 0...W-1
+    numlist(0,H1,N2), % 0...H-1
+    findall((X,Y),(member(X,N1),member(Y,N2)),Board),
+    occupy_wall(L,Occupy1),
+    findall((C1,C2),member(crate(_,C1,C2),L),Occupy2),
+    append(Occupy1,Occupy2,Occupy),
+    subtract(Board,Occupy,Unoccupy).
+
+occupy_wall([],[]).
+occupy_wall([wall((X1,Y1),(X2,Y2))|Rest],[OCU|Occupy]):-
+    %vertical
+    X1 =:= X2,
+    Y1 =< Y2,
+    Diff is Y2 - Y1,!,
+    numlist(0,Diff,Add),
+    findall((X1,NY),(member(AD,Add),NY is AD+Y1),OCU),
+    occupy_wall(Rest,Occupy)
+    ;
+    % horizontal
+    Y1 =:= Y2,
+    X1 =< X2,
+    Diff is X2-X1,!,
+    numlist(0,Diff,Add),
+    findall((XN,Y1),(member(AD,Add),XN is AD+X1),OCU),
+    occupy_wall(Rest,Occupy).
+
+occupy_wall([_|Rest],Occupy):-
+    occupy_wall(Rest,Occupy).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+:- use_module(library(lists)).
+
+writeall([]) :- writeln('   fail').
+writeall(List) :- List \== [], writeall(List,'   ','').
+writeall([],_,_).
+writeall([X|R],Prefix,Postfix) :-
+    write(Prefix),
+    write(X),
+    writeln(Postfix),
+    writeall(R,Prefix,Postfix).
+
+test_assignment_1 :-
+    Sok1 = sokoban(7,7, (1,1), [wall((0,0),(6,0)), wall((6,0),(6,6)), wall((0,6),(6,6)), wall((0,0),(0,6)),
+                                 wall((3,0),(3,2)), wall((3,4),(3,6)), crate(1,3,3), storage(1,3)]),
+    findall(P,reachable(Sok1,P),L),
+    writeln('\nALL SOLUTIONS TO ASSIGNMENT 1.1:'),
+    writeall(L).
 
     
