@@ -200,8 +200,7 @@ minimal_spanning_tree(Nodes,Edges,MST) :-
     create_labels(Nodes,Labels),
     iterate_edges(SEdges,Labels,[],MST).
     
-iterate_edges(Edges,Labels,OUT,OUT):-
-    forall(member(edge(_,N1,N2),Edges),identical_labels(Labels,N1,N2)).
+iterate_edges([],_,OUT,OUT):-.
 
 iterate_edges([edge(D,N1,N2)|Edges],Labels,IN,OUT) :-
     \+identical_labels(Labels,N1,N2),!,
