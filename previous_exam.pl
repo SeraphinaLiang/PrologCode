@@ -148,5 +148,89 @@ overlaps_pumpjack(pumpjack(X1,Y1,_),X,Y) :-
     X >= X1-1, X =< X1+1,
     Y >= Y1-1, Y =< Y1+1.
     
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PART II: Neighbours & Shortest Paths
+
+neighbour(X,Y,X1,Y1) :-
+    ( 
+     (X1 is X+1, Y = Y1);
+     (X1 is X-1, Y = Y1);
+     (Y1 is Y-1, X = X1);
+     (Y1 is Y+1, X = X1)
+    ),
+    \+((pumpjack(A,B,D),overlaps_pumpjack(pumpjack(A,B,D),X,Y))).
+   
+shortest_path(Target,Source,Distance) :-
+    shortest_path(Target,[qi(Source,0)],[],Distance).
+
+shortest_path(_Target,Queue,_Visited,_Distance) :-
+    Queue = [],
+    !,
+    fail.
+shortest_path(Target,Queue,_Visited,Distance) :-
+    Queue = [qi(Target,DTarget)|_],
+    !,
+    Distance = DTarget.    
     
+shortest_path(Target,Queue,Visited,Distance) :-
+    Queue      = [qi((X,Y),DNode)|RestQueue],
+    DNeighbour is DNode + 1,
+    findall(qi((NX,NY),DNeighbour),
+	    (
+		neighbour(X,Y,NX,NY),
+		not(member(qi((NX,NY),_),Visited))
+	    ),
+	    Neighbours),
+    append(RestQueue,Neighbours,NewQueue),
+    append(Neighbours,Visited,NewVisited),
+    shortest_path(Target,NewQueue,NewVisited,Distance).
+
+shortest_paths(Nodes,Paths) :-
+    findall(edge(D,N1,N2),
+	    (member(N1,Nodes),
+	     member(N2,Nodes),
+	     N1 \== N2,
+	     shortest_path(N1,N2,D)),
+	    Paths).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PART III: finding the minimal spanning tree
+
+minimal_spanning_tree(Nodes,Edges,MST) :-
+    sort(Edges,SEdges),
+    create_labels(Nodes,Labels),
+    iterate_edges(SEdges,Labels,[],MST).
+    
+iterate_edges(Edges,Labels,OUT,OUT):-
+    forall(member(edge(_,N1,N2),Edges),identical_labels(Labels,N1,N2)).
+
+iterate_edges([edge(D,N1,N2)|Edges],Labels,IN,OUT) :-
+    \+identical_labels(Labels,N1,N2),!,
+    unify_labels(Labels,N1,N2),
+    iterate_edges(Edges,Labels,[edge(D,N1,N2)|IN],OUT)
+    ;
+    iterate_edges(Edges,Labels,IN,OUT).
+
+plan(MST) :-
+    outputs(Outputs),
+    shortest_paths(Outputs,Paths),
+    minimal_spanning_tree(Outputs,Paths,MST).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% DO NOT EDIT BELOW THIS LINE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Predicates to create, test and unify labels. 
+
+create_labels(Nodes,Labels) :- findall(N-_,member(N,Nodes),Labels).
+identical_labels(Labels,N1,N2) :-
+    member(N1-L1,Labels),
+    member(N2-L2,Labels),
+    !,
+    L1 == L2.
+unify_labels(Labels,N1,N2) :-
+    member(N1-L1,Labels),
+    member(N2-L2,Labels),
+    !,
+    L1 = L2.
+
+   
     
