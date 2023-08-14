@@ -290,3 +290,40 @@ spread(CUR,END,VISIT,NOTV,TOUR):-
 check_color_next([],_).
 check_color_next([_-C1|_],C2):-
     C1 \== C2.
+
+    
+-----------------------------------------------------
+highway(1,2,a).
+highway(2,3,c).
+highway(1,3,a).
+
+
+connect(A,B):-
+    highway(A,B,_);
+    highway(B,A,_).
+
+check():-
+    findall(X,(highway(X,_,_);highway(_,X,_)),L1),
+    sort(L1,L2),
+    forall(member(K,L2),(checkevenat(K),checkcolorat(K))).
+
+checkevenat(K):-
+    findall(connect(K,K1),connect(K,K1),L),
+    sort(L,L1),
+    length(L1,LEN),!,
+    LEN mod 2 =:= 0.
+
+getcolor(X,LC):-
+    findall(C,(highway(X,_,C);highway(_,X,C)),LC).
+
+checkcolorat(K):-
+    K = 1;
+    getcolor(K,LC),
+    forall(member(C,LC),okcolor(C,LC)).
+
+okcolor(X,XL):-
+    findall(X1,(member(X1,XL),X1 == X),LX1),
+    length(XL,LEN),
+    length(LX1,LEN1),!,
+    LEN2 is LEN-LEN1,!,
+    LEN2 >=LEN1.
