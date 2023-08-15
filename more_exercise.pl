@@ -20,3 +20,43 @@ minmaxtree_min(node(C1-T1,C2-T2),R):-
     minmaxtree_max(T1,R).
 
 -------------------------------------------------------------------
+teaches(holvoet,bvp).
+teaches(moens,bvp).
+teaches(demoen,fi).
+teaches(dedecker,socs).
+teaches(holvoet,swop).
+teaches(jacobs,swop).
+teaches(demoen,ai).
+teaches(deschreye,ai).
+
+takes(joachim,bvp).
+takes(joachim,fi).
+takes(joachim,ai).
+takes(matthias,bvp).
+takes(matthias,ai).
+takes(thomas,socs).
+takes(thomas,swop).
+takes(ingmar,swop).
+
+takes_same_course(X,Y):-
+    findall(pair(X1,Y1),(takes(X1,A),takes(Y1,A)),L),
+    sort(L,LS),
+    member(pair(X,Y),LS),
+    X \== Y.
+
+teach_same_course(X,Y):-
+    findall(pair(X1,Y1),(teaches(X1,A),teaches(Y1,A)),L),
+    list_to_set(L,LS),
+    member(pair(X,Y),LS),
+    X \== Y.
+
+teaches_multiple_courses(Y):-
+    findall(F,teaches(F,_),L),
+    sort(L,SY),
+    include(more_than_one,SY,SSY),
+    member(Y,SSY).
+
+more_than_one(I):-
+    findall(teaches(I,A),teaches(I,A),L),
+    length(L,LEN),
+    LEN > 1.
