@@ -60,3 +60,30 @@ more_than_one(I):-
     findall(teaches(I,A),teaches(I,A),L),
     length(L,LEN),
     LEN > 1.
+
+
+-----------------------------------------------
+% A simple solution
+map(_, [], []).
+map(P, [X|Xs], [Y|Ys]) :-
+    Call =.. [P,X,Y],
+    call(Call),
+    map(P,Xs,Ys).
+
+increment(X,Y) :- Y is X + 1.
+
+decrement(X,Y) :- Y is X - 1.
+
+% A more comprehensive solution that allows for calls such as:
+% map1(plus(2),[2,3,4],[4,5,6]).
+
+map1(_,[],[]).
+map1(P, [X|Xs], [Y|Ys]) :-
+    P =.. Args,
+    append(Args, [X,Y], NewArgs),
+    Call =.. NewArgs,
+    call(Call),
+    map1(P,Xs,Ys).
+
+plus(X,Y,Z):-
+    Z is X + Y.
