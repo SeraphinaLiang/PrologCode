@@ -136,3 +136,24 @@ map([use(A)|InL], [use(NB)|OutL], Table, N) :-
     member(asgn(A,NB), Table),
     !,
     map(InL,OutL,Table,N).
+-------------------------------------
+translate(L1,L2):-
+    get_asign(L1,Asign,1),
+    replace(Asign,L1,L2).
+
+get_asign([],[],_).
+get_asign([def(T)|L],[pair(T,N)|L1],N):-
+    N1 is N+1,
+    get_asign(L,L1,N1).
+get_asign([_|L],L1,N):-
+    get_asign(L,L1,N).
+
+replace(_,[],[]).
+replace(A,[S1|L1],[S2|L2]):-
+    get_match(A,S1,S2),
+    replace(A,L1,L2).
+
+get_match([pair(S,N)|_],use(S),use(N)).
+get_match([pair(S,N)|_],def(S),asgn(S,N)).
+get_match([_|L],S1,S2):-
+    get_match(L,S1,S2).
