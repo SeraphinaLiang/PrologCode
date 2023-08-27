@@ -305,5 +305,66 @@ test_assignment_1 :-
     findall(P,reachable(Sok1,P),L),
     writeln('\nALL SOLUTIONS TO ASSIGNMENT 1.1:'),
     writeall(L).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% sokoban(Width, Height, CurrPos, Field)
+reachable(sokoban(Width, Height, CurrPos, Field), (X,Y)):-
+    getoccupiedpos(Field,Occupy),
+    getfreepos(Occupy,Width,Height,Freepos),
+    findreachable(Freepos,CurrPos,Reachpos),
+    sort(Reachpos,RP),
+    member((X,Y),RP).
 
+
+findreachable([],C,[C]).
+findreachable(Freepos,Cur,[P1|Reachpos]):-
+    select(P1,Freepos,NF),
+    adjancent(P1,Cur),
+    findreachable(NF,P1,Reachpos).
+
+adjancent((X,Y1),(X,Y2)):-!,
+    abs(Y1-Y2) =:= 1.
+adjancent((X1,Y),(X2,Y)):-!,
+    abs(X1-X2) =:= 1.
+
+getfreepos(Occupy,Width,Height,Freepos):-
+    % must do like this
+    numlist(0,Width,WL),
+    numlist(0,Height,HL),
+    findall((X,Y),(member(X,WL),member(Y,HL)),Board),
+    freePos(Board,Occupy,Freepos).
+
+
+% subset
+freePos(L,[],L).
+freePos([X|L1],[X|L2],P):-
+    freePos(L1,L2,P).
+freePos(L1,[_|L2],P):-
+    freePos(L1,L2,P).
+
+
+%---------done------------------------------
+
+getoccupiedpos(Field,Occupy):-
+    getWall(Field,Walls),
+    findall((X1,Y1),member(crate(_,X1,Y1),Field),Listofcrate),
+    append(Listofcrate,Walls,Occupy).
+
+getWall(Fields,Walls):-
+    findall(wall(A,B),member(wall(A,B),Fields),L1),
+    getExtendPos(L1,Pos),
+    sort(Pos,Walls).
+
+getExtendPos([],[]).
+getExtendPos([W|LW],Pos):-
+    getbrick(W,B),
+    append(B,Pos1,Pos),
+    getExtendPos(LW,Pos1).
+
+getbrick(wall((X,Y),(X,Y)),[(X,Y)]).
+getbrick(wall((X1,Y),(X2,Y)),[(X1,Y)|Bricks]):-
+    X11 is X1+1,
+    getbrick(wall((X11,Y),(X2,Y)),Bricks).
+getbrick(wall((X,Y1),(X,Y2)),[(X,Y1)|Bricks]):-
+    Y11 is Y1+1,
+    getbrick(wall((X,Y11),(X,Y2)),Bricks).
     
